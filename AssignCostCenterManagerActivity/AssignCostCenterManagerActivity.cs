@@ -13,6 +13,7 @@ using System.Workflow.Activities.Rules;
 using Microsoft.ResourceManagement.WebServices.WSResourceManagement;
 using System.Collections.ObjectModel;
 using Microsoft.ResourceManagement.Workflow.Activities;
+using System.Text;
 
 namespace FIM.AssignCostCenterManagerActivity
 {
@@ -25,7 +26,7 @@ namespace FIM.AssignCostCenterManagerActivity
         private Guid _costCenter;
         private string _costCenterCode;
         private bool _cccExists;
-        private string _manager;
+        private Guid _manager;
 
         public AssignCostCenterManagerActivity()
         {
@@ -50,7 +51,6 @@ namespace FIM.AssignCostCenterManagerActivity
             }
         }
         #endregion
-
         #region ReadUser
         public static DependencyProperty ReadUser_ActorId1Property = DependencyProperty.Register("ReadUser_ActorId1", typeof(System.Guid), typeof(FIM.AssignCostCenterManagerActivity.AssignCostCenterManagerActivity));
 
@@ -120,7 +120,6 @@ namespace FIM.AssignCostCenterManagerActivity
             }
         }
         #endregion
-
         #region FindCostCenterGuid
         public static DependencyProperty FindCostCenter_ActorId1Property = DependencyProperty.Register("FindCostCenter_ActorId1", typeof(System.Guid), typeof(FIM.AssignCostCenterManagerActivity.AssignCostCenterManagerActivity));
 
@@ -224,7 +223,6 @@ namespace FIM.AssignCostCenterManagerActivity
             }
         }
         #endregion
-
         #region ReadCostCenter
         public static DependencyProperty ReadCostCenter_ActorId1Property = DependencyProperty.Register("ReadCostCenter_ActorId1", typeof(System.Guid), typeof(FIM.AssignCostCenterManagerActivity.AssignCostCenterManagerActivity));
 
@@ -294,7 +292,6 @@ namespace FIM.AssignCostCenterManagerActivity
             }
         }
         #endregion
-
         #region UpdateUser
         public static DependencyProperty UpdateUser_ActorId1Property = DependencyProperty.Register("UpdateUser_ActorId1", typeof(System.Guid), typeof(FIM.AssignCostCenterManagerActivity.AssignCostCenterManagerActivity));
 
@@ -406,12 +403,13 @@ namespace FIM.AssignCostCenterManagerActivity
         private void InitFindCostCenterGuid_ExecuteCode(object sender, EventArgs e)
         {
             // Get cost center code
-            _costCenterCode = ReadUser.Resource["CostCenterCode"].ToString();
+            _costCenterCode = (ReadUser.Resource["CostCenter"] != null) ? ReadUser.Resource["CostCenter"].ToString() : null;
 
             // Init FindCostCenter activity
             this.FindCostCenter_ActorId1 = FIMADMGUID;
             this.FindCostCenter_PageSize1 = 100;
-            this.FindCostCenter_XPathFilter1 = "/labCostCenter[Cost Center=" + _costCenterCode + "]";
+            this.FindCostCenter_Selection1 = new string[] { "Manager" };
+            this.FindCostCenter_XPathFilter1 = "/labCostCenter[CostCenter='" + _costCenterCode + "']";
         }
 
         private void InitIfElseActivity1_ExecuteCode(object sender, EventArgs e)
@@ -422,17 +420,27 @@ namespace FIM.AssignCostCenterManagerActivity
 
         private void InitReadCostCenter_ExecuteCode(object sender, EventArgs e)
         {
-            RequestType costCenterRequest = EnumerateResourcesActivity.GetCurrentIterationItem((CodeActivity)sender) as RequestType;
-            _costCenter = costCenterRequest.ObjectID.GetGuid();
+            //RequestType costCenterRequest = EnumerateResourcesActivity.GetCurrentIterationItem((CodeActivity)sender) as RequestType;
+            //_costCenter = costCenterRequest.ObjectID.GetGuid();
 
             // Init ReadCostCenter activity
             this.ReadCostCenter_ActorId1 = FIMADMGUID;
             this.ReadCostCenter_ResourceId1 = _costCenter;
         }
 
+        private void Iterate_Enum_ExecuteCode(object sender, EventArgs e)
+        {
+            ResourceType costCenterResource = EnumerateResourcesActivity.GetCurrentIterationItem((CodeActivity)sender) as ResourceType;
+            _costCenter = costCenterResource.ObjectID.GetGuid();
+        }
+
         private void InitUpdateUser_ExecuteCode(object sender, EventArgs e)
         {
-            _manager = this.ReadCostCenter.Resource["Manager"].ToString();
+            StringBuilder buildGuid = new StringBuilder();
+            buildGuid.Append(this.ReadCostCenter.Resource["Manager"].ToString().Split(':')[2]);
+
+            //_manager = new Guid(this.ReadCostCenter.Resource["Manager"].ToString());
+            _manager = new Guid(buildGuid.ToString());
 
             // Init UpdateUser activity
             this.UpdateUser_ActorId1 = _requestor;

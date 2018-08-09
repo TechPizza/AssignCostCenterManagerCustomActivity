@@ -49,6 +49,7 @@ namespace FIM.AssignCostCenterManagerActivity
             System.Workflow.ComponentModel.ActivityBind activitybind20 = new System.Workflow.ComponentModel.ActivityBind();
             this.UpdateUser = new Microsoft.ResourceManagement.Workflow.Activities.UpdateResourceActivity();
             this.InitUpdateUser = new System.Workflow.Activities.CodeActivity();
+            this.Iterate_Enum = new System.Workflow.Activities.CodeActivity();
             this.ReadCostCenter = new Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity();
             this.InitReadCostCenter = new System.Workflow.Activities.CodeActivity();
             this.CostCenterNotFound = new System.Workflow.Activities.IfElseBranchActivity();
@@ -85,8 +86,13 @@ namespace FIM.AssignCostCenterManagerActivity
             this.InitUpdateUser.Name = "InitUpdateUser";
             this.InitUpdateUser.ExecuteCode += new System.EventHandler(this.InitUpdateUser_ExecuteCode);
             // 
-            // ReadCostCenter
+            // InitIterate_Enum
             // 
+            this.Iterate_Enum.Name = "Iterate_Enum";
+            this.Iterate_Enum.ExecuteCode += new System.EventHandler(this.Iterate_Enum_ExecuteCode);
+            // 
+            // ReadCostCenter
+            //
             activitybind6.Name = "AssignCostCenterManagerActivity";
             activitybind6.Path = "ReadCostCenter_ActorId1";
             this.ReadCostCenter.Name = "ReadCostCenter";
@@ -133,6 +139,7 @@ namespace FIM.AssignCostCenterManagerActivity
             // 
             // FindCostCenterGuid
             // 
+            this.FindCostCenterGuid.Activities.Add(this.Iterate_Enum);
             activitybind10.Name = "AssignCostCenterManagerActivity";
             activitybind10.Path = "FindCostCenter_ActorId1";
             this.FindCostCenterGuid.Name = "FindCostCenterGuid";
@@ -205,6 +212,8 @@ namespace FIM.AssignCostCenterManagerActivity
         private Microsoft.ResourceManagement.Workflow.Activities.UpdateResourceActivity UpdateUser;
 
         private CodeActivity InitUpdateUser;
+
+        private CodeActivity Iterate_Enum;
 
         private Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity ReadCostCenter;
 
