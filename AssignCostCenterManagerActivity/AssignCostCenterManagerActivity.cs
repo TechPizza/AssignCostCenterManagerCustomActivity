@@ -408,7 +408,7 @@ namespace FIM.AssignCostCenterManagerActivity
             // Init FindCostCenter activity
             this.FindCostCenter_ActorId1 = FIMADMGUID;
             this.FindCostCenter_PageSize1 = 100;
-            this.FindCostCenter_Selection1 = new string[] { "Manager" };
+            //this.FindCostCenter_Selection1 = new string[] { "Manager" };
             this.FindCostCenter_XPathFilter1 = "/labCostCenter[CostCenter='" + _costCenterCode + "']";
         }
 
