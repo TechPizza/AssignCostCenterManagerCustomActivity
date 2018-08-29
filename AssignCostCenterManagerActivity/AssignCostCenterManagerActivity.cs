@@ -378,6 +378,75 @@ namespace FIM.AssignCostCenterManagerActivity
             }
         }
         #endregion
+        #region ReadManager
+        public static DependencyProperty ReadManagerActivity_ActorId1Property = DependencyProperty.Register("ReadManagerActivity_ActorId1", typeof(System.Guid), typeof(FIM.AssignCostCenterManagerActivity.AssignCostCenterManagerActivity));
+
+        [DesignerSerializationVisibilityAttribute(DesignerSerializationVisibility.Visible)]
+        [BrowsableAttribute(true)]
+        [CategoryAttribute("Parameters")]
+        public Guid ReadManagerActivity_ActorId1
+        {
+            get
+            {
+                return ((System.Guid)(base.GetValue(FIM.AssignCostCenterManagerActivity.AssignCostCenterManagerActivity.ReadManagerActivity_ActorId1Property)));
+            }
+            set
+            {
+                base.SetValue(FIM.AssignCostCenterManagerActivity.AssignCostCenterManagerActivity.ReadManagerActivity_ActorId1Property, value);
+            }
+        }
+
+        public static DependencyProperty ReadManagerActivity_Resource1Property = DependencyProperty.Register("ReadManagerActivity_Resource1", typeof(Microsoft.ResourceManagement.WebServices.WSResourceManagement.ResourceType), typeof(FIM.AssignCostCenterManagerActivity.AssignCostCenterManagerActivity));
+
+        [DesignerSerializationVisibilityAttribute(DesignerSerializationVisibility.Visible)]
+        [BrowsableAttribute(true)]
+        [CategoryAttribute("Parameters")]
+        public ResourceType ReadManagerActivity_Resource1
+        {
+            get
+            {
+                return ((Microsoft.ResourceManagement.WebServices.WSResourceManagement.ResourceType)(base.GetValue(FIM.AssignCostCenterManagerActivity.AssignCostCenterManagerActivity.ReadManagerActivity_Resource1Property)));
+            }
+            set
+            {
+                base.SetValue(FIM.AssignCostCenterManagerActivity.AssignCostCenterManagerActivity.ReadManagerActivity_Resource1Property, value);
+            }
+        }
+
+        public static DependencyProperty ReadManagerActivity_ResourceId1Property = DependencyProperty.Register("ReadManagerActivity_ResourceId1", typeof(System.Guid), typeof(FIM.AssignCostCenterManagerActivity.AssignCostCenterManagerActivity));
+
+        [DesignerSerializationVisibilityAttribute(DesignerSerializationVisibility.Visible)]
+        [BrowsableAttribute(true)]
+        [CategoryAttribute("Parameters")]
+        public Guid ReadManagerActivity_ResourceId1
+        {
+            get
+            {
+                return ((System.Guid)(base.GetValue(FIM.AssignCostCenterManagerActivity.AssignCostCenterManagerActivity.ReadManagerActivity_ResourceId1Property)));
+            }
+            set
+            {
+                base.SetValue(FIM.AssignCostCenterManagerActivity.AssignCostCenterManagerActivity.ReadManagerActivity_ResourceId1Property, value);
+            }
+        }
+
+        public static DependencyProperty ReadManagerActivity_SelectionAttributes1Property = DependencyProperty.Register("ReadManagerActivity_SelectionAttributes1", typeof(System.String[]), typeof(FIM.AssignCostCenterManagerActivity.AssignCostCenterManagerActivity));
+
+        [DesignerSerializationVisibilityAttribute(DesignerSerializationVisibility.Visible)]
+        [BrowsableAttribute(true)]
+        [CategoryAttribute("Parameters")]
+        public String[] ReadManagerActivity_SelectionAttributes1
+        {
+            get
+            {
+                return ((string[])(base.GetValue(FIM.AssignCostCenterManagerActivity.AssignCostCenterManagerActivity.ReadManagerActivity_SelectionAttributes1Property)));
+            }
+            set
+            {
+                base.SetValue(FIM.AssignCostCenterManagerActivity.AssignCostCenterManagerActivity.ReadManagerActivity_SelectionAttributes1Property, value);
+            }
+        }
+        #endregion
 
         private void InitReadUser_ExecuteCode(object sender, EventArgs e)
         {
@@ -434,7 +503,7 @@ namespace FIM.AssignCostCenterManagerActivity
             _costCenter = costCenterResource.ObjectID.GetGuid();
         }
 
-        private void InitUpdateUser_ExecuteCode(object sender, EventArgs e)
+        private void InitReadManager_ExecuteCode(object sender, EventArgs e)
         {
             StringBuilder buildGuid = new StringBuilder();
             buildGuid.Append(this.ReadCostCenter.Resource["Manager"].ToString().Split(':')[2]);
@@ -442,12 +511,20 @@ namespace FIM.AssignCostCenterManagerActivity
             //_manager = new Guid(this.ReadCostCenter.Resource["Manager"].ToString());
             _manager = new Guid(buildGuid.ToString());
 
+            this.ReadManagerActivity_ActorId1 = FIMADMGUID;
+            this.ReadManagerActivity_ResourceId1 = _manager;
+        }
+
+        private void InitUpdateUser_ExecuteCode(object sender, EventArgs e)
+        {
+            
             // Init UpdateUser activity
             this.UpdateUser_ActorId1 = _requestor;
             this.UpdateUser_ResourceId1 = _target;
             this.UpdateUser_UpdateParameters1 = new UpdateRequestParameter[] {
-                new UpdateRequestParameter("Manager", UpdateMode.Modify, _manager)
+                new UpdateRequestParameter("Manager", UpdateMode.Modify, _manager),
+                new UpdateRequestParameter("LAB-ManagerSamAccount", UpdateMode.Modify, this.ReadManagerActivity.Resource["LAB-samAccountName"].ToString())
             };
-        }
+        }      
     }
 }

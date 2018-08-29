@@ -35,11 +35,11 @@ namespace FIM.AssignCostCenterManagerActivity
             System.Workflow.ComponentModel.ActivityBind activitybind7 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind8 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind9 = new System.Workflow.ComponentModel.ActivityBind();
-            System.Workflow.Activities.Rules.RuleConditionReference ruleconditionreference1 = new System.Workflow.Activities.Rules.RuleConditionReference();
             System.Workflow.ComponentModel.ActivityBind activitybind10 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind11 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind12 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind13 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.Activities.Rules.RuleConditionReference ruleconditionreference1 = new System.Workflow.Activities.Rules.RuleConditionReference();
             System.Workflow.ComponentModel.ActivityBind activitybind14 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind15 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind16 = new System.Workflow.ComponentModel.ActivityBind();
@@ -47,13 +47,19 @@ namespace FIM.AssignCostCenterManagerActivity
             System.Workflow.ComponentModel.ActivityBind activitybind18 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind19 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind20 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind21 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind22 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind23 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind24 = new System.Workflow.ComponentModel.ActivityBind();
             this.UpdateUser = new Microsoft.ResourceManagement.Workflow.Activities.UpdateResourceActivity();
             this.InitUpdateUser = new System.Workflow.Activities.CodeActivity();
-            this.Iterate_Enum = new System.Workflow.Activities.CodeActivity();
+            this.ReadManagerActivity = new Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity();
+            this.initReadManager = new System.Workflow.Activities.CodeActivity();
             this.ReadCostCenter = new Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity();
             this.InitReadCostCenter = new System.Workflow.Activities.CodeActivity();
             this.CostCenterNotFound = new System.Workflow.Activities.IfElseBranchActivity();
             this.CostCenterFound = new System.Workflow.Activities.IfElseBranchActivity();
+            this.Iterate_Enum = new System.Workflow.Activities.CodeActivity();
             this.CostCenterExists = new System.Workflow.Activities.IfElseActivity();
             this.InitIfElseActivity1 = new System.Workflow.Activities.CodeActivity();
             this.FindCostCenterGuid = new Microsoft.ResourceManagement.Workflow.Activities.EnumerateResourcesActivity();
@@ -86,26 +92,42 @@ namespace FIM.AssignCostCenterManagerActivity
             this.InitUpdateUser.Name = "InitUpdateUser";
             this.InitUpdateUser.ExecuteCode += new System.EventHandler(this.InitUpdateUser_ExecuteCode);
             // 
-            // InitIterate_Enum
+            // ReadManagerActivity
             // 
-            this.Iterate_Enum.Name = "Iterate_Enum";
-            this.Iterate_Enum.ExecuteCode += new System.EventHandler(this.Iterate_Enum_ExecuteCode);
+            activitybind6.Name = "AssignCostCenterManagerActivity";
+            activitybind6.Path = "ReadManagerActivity_ActorId1";
+            this.ReadManagerActivity.Name = "ReadManagerActivity";
+            activitybind7.Name = "AssignCostCenterManagerActivity";
+            activitybind7.Path = "ReadManagerActivity_Resource1";
+            activitybind8.Name = "AssignCostCenterManagerActivity";
+            activitybind8.Path = "ReadManagerActivity_ResourceId1";
+            activitybind9.Name = "AssignCostCenterManagerActivity";
+            activitybind9.Path = "ReadManagerActivity_SelectionAttributes1";
+            this.ReadManagerActivity.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.ActorIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind6)));
+            this.ReadManagerActivity.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.ResourceProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind7)));
+            this.ReadManagerActivity.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.ResourceIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind8)));
+            this.ReadManagerActivity.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.SelectionAttributesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind9)));
+            // 
+            // initReadManager
+            // 
+            this.initReadManager.Name = "initReadManager";
+            this.initReadManager.ExecuteCode += new System.EventHandler(this.InitReadManager_ExecuteCode);
             // 
             // ReadCostCenter
-            //
-            activitybind6.Name = "AssignCostCenterManagerActivity";
-            activitybind6.Path = "ReadCostCenter_ActorId1";
+            // 
+            activitybind10.Name = "AssignCostCenterManagerActivity";
+            activitybind10.Path = "ReadCostCenter_ActorId1";
             this.ReadCostCenter.Name = "ReadCostCenter";
-            activitybind7.Name = "AssignCostCenterManagerActivity";
-            activitybind7.Path = "ReadCostCenter_Resource1";
-            activitybind8.Name = "AssignCostCenterManagerActivity";
-            activitybind8.Path = "ReadCostCenter_ResourceId1";
-            activitybind9.Name = "AssignCostCenterManagerActivity";
-            activitybind9.Path = "ReadCostCenter_SelectionAttributes1";
-            this.ReadCostCenter.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.ActorIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind6)));
-            this.ReadCostCenter.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.ResourceProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind7)));
-            this.ReadCostCenter.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.ResourceIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind8)));
-            this.ReadCostCenter.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.SelectionAttributesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind9)));
+            activitybind11.Name = "AssignCostCenterManagerActivity";
+            activitybind11.Path = "ReadCostCenter_Resource1";
+            activitybind12.Name = "AssignCostCenterManagerActivity";
+            activitybind12.Path = "ReadCostCenter_ResourceId1";
+            activitybind13.Name = "AssignCostCenterManagerActivity";
+            activitybind13.Path = "ReadCostCenter_SelectionAttributes1";
+            this.ReadCostCenter.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.ActorIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind10)));
+            this.ReadCostCenter.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.ResourceProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind11)));
+            this.ReadCostCenter.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.ResourceIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind12)));
+            this.ReadCostCenter.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.SelectionAttributesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind13)));
             // 
             // InitReadCostCenter
             // 
@@ -120,11 +142,18 @@ namespace FIM.AssignCostCenterManagerActivity
             // 
             this.CostCenterFound.Activities.Add(this.InitReadCostCenter);
             this.CostCenterFound.Activities.Add(this.ReadCostCenter);
+            this.CostCenterFound.Activities.Add(this.initReadManager);
+            this.CostCenterFound.Activities.Add(this.ReadManagerActivity);
             this.CostCenterFound.Activities.Add(this.InitUpdateUser);
             this.CostCenterFound.Activities.Add(this.UpdateUser);
             ruleconditionreference1.ConditionName = "Condition1";
             this.CostCenterFound.Condition = ruleconditionreference1;
             this.CostCenterFound.Name = "CostCenterFound";
+            // 
+            // Iterate_Enum
+            // 
+            this.Iterate_Enum.Name = "Iterate_Enum";
+            this.Iterate_Enum.ExecuteCode += new System.EventHandler(this.Iterate_Enum_ExecuteCode);
             // 
             // CostCenterExists
             // 
@@ -140,25 +169,25 @@ namespace FIM.AssignCostCenterManagerActivity
             // FindCostCenterGuid
             // 
             this.FindCostCenterGuid.Activities.Add(this.Iterate_Enum);
-            activitybind10.Name = "AssignCostCenterManagerActivity";
-            activitybind10.Path = "FindCostCenter_ActorId1";
-            this.FindCostCenterGuid.Name = "FindCostCenterGuid";
-            activitybind11.Name = "AssignCostCenterManagerActivity";
-            activitybind11.Path = "FindCostCenter_PageSize1";
-            activitybind12.Name = "AssignCostCenterManagerActivity";
-            activitybind12.Path = "FindCostCenter_Selection1";
-            activitybind13.Name = "AssignCostCenterManagerActivity";
-            activitybind13.Path = "FindCostCenter_SortingAttributes1";
             activitybind14.Name = "AssignCostCenterManagerActivity";
-            activitybind14.Path = "FindCostCenter_TotalResultsCount1";
+            activitybind14.Path = "FindCostCenter_ActorId1";
+            this.FindCostCenterGuid.Name = "FindCostCenterGuid";
             activitybind15.Name = "AssignCostCenterManagerActivity";
-            activitybind15.Path = "FindCostCenter_XPathFilter1";
-            this.FindCostCenterGuid.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EnumerateResourcesActivity.ActorIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind10)));
-            this.FindCostCenterGuid.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EnumerateResourcesActivity.PageSizeProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind11)));
-            this.FindCostCenterGuid.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EnumerateResourcesActivity.SelectionProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind12)));
-            this.FindCostCenterGuid.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EnumerateResourcesActivity.SortingAttributesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind13)));
-            this.FindCostCenterGuid.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EnumerateResourcesActivity.TotalResultsCountProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind14)));
-            this.FindCostCenterGuid.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EnumerateResourcesActivity.XPathFilterProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind15)));
+            activitybind15.Path = "FindCostCenter_PageSize1";
+            activitybind16.Name = "AssignCostCenterManagerActivity";
+            activitybind16.Path = "FindCostCenter_Selection1";
+            activitybind17.Name = "AssignCostCenterManagerActivity";
+            activitybind17.Path = "FindCostCenter_SortingAttributes1";
+            activitybind18.Name = "AssignCostCenterManagerActivity";
+            activitybind18.Path = "FindCostCenter_TotalResultsCount1";
+            activitybind19.Name = "AssignCostCenterManagerActivity";
+            activitybind19.Path = "FindCostCenter_XPathFilter1";
+            this.FindCostCenterGuid.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EnumerateResourcesActivity.ActorIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind14)));
+            this.FindCostCenterGuid.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EnumerateResourcesActivity.PageSizeProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind15)));
+            this.FindCostCenterGuid.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EnumerateResourcesActivity.SelectionProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind16)));
+            this.FindCostCenterGuid.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EnumerateResourcesActivity.SortingAttributesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind17)));
+            this.FindCostCenterGuid.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EnumerateResourcesActivity.TotalResultsCountProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind18)));
+            this.FindCostCenterGuid.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EnumerateResourcesActivity.XPathFilterProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind19)));
             // 
             // InitFindCostCenterGuid
             // 
@@ -167,19 +196,19 @@ namespace FIM.AssignCostCenterManagerActivity
             // 
             // ReadUser
             // 
-            activitybind16.Name = "AssignCostCenterManagerActivity";
-            activitybind16.Path = "ReadUser_ActorId1";
+            activitybind20.Name = "AssignCostCenterManagerActivity";
+            activitybind20.Path = "ReadUser_ActorId1";
             this.ReadUser.Name = "ReadUser";
-            activitybind17.Name = "AssignCostCenterManagerActivity";
-            activitybind17.Path = "ReadUser_Resource1";
-            activitybind18.Name = "AssignCostCenterManagerActivity";
-            activitybind18.Path = "ReadUser_ResourceId1";
-            activitybind19.Name = "AssignCostCenterManagerActivity";
-            activitybind19.Path = "ReadUser_SelectionAttributes1";
-            this.ReadUser.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.ActorIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind16)));
-            this.ReadUser.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.ResourceProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind17)));
-            this.ReadUser.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.ResourceIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind18)));
-            this.ReadUser.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.SelectionAttributesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind19)));
+            activitybind21.Name = "AssignCostCenterManagerActivity";
+            activitybind21.Path = "ReadUser_Resource1";
+            activitybind22.Name = "AssignCostCenterManagerActivity";
+            activitybind22.Path = "ReadUser_ResourceId1";
+            activitybind23.Name = "AssignCostCenterManagerActivity";
+            activitybind23.Path = "ReadUser_SelectionAttributes1";
+            this.ReadUser.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.ActorIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind20)));
+            this.ReadUser.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.ResourceProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind21)));
+            this.ReadUser.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.ResourceIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind22)));
+            this.ReadUser.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity.SelectionAttributesProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind23)));
             // 
             // InitReadUser
             // 
@@ -188,10 +217,10 @@ namespace FIM.AssignCostCenterManagerActivity
             // 
             // CurrentRequest
             // 
-            activitybind20.Name = "AssignCostCenterManagerActivity";
-            activitybind20.Path = "CurrentRequest_CurrentRequest1";
+            activitybind24.Name = "AssignCostCenterManagerActivity";
+            activitybind24.Path = "CurrentRequest_CurrentRequest1";
             this.CurrentRequest.Name = "CurrentRequest";
-            this.CurrentRequest.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.CurrentRequestActivity.CurrentRequestProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind20)));
+            this.CurrentRequest.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.CurrentRequestActivity.CurrentRequestProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind24)));
             // 
             // AssignCostCenterManagerActivity
             // 
@@ -208,6 +237,10 @@ namespace FIM.AssignCostCenterManagerActivity
         }
 
         #endregion
+
+        private CodeActivity initReadManager;
+
+        private Microsoft.ResourceManagement.Workflow.Activities.ReadResourceActivity ReadManagerActivity;
 
         private Microsoft.ResourceManagement.Workflow.Activities.UpdateResourceActivity UpdateUser;
 
@@ -236,6 +269,11 @@ namespace FIM.AssignCostCenterManagerActivity
         private CodeActivity InitReadUser;
 
         private Microsoft.ResourceManagement.Workflow.Activities.CurrentRequestActivity CurrentRequest;
+
+
+
+
+
 
 
 
