@@ -523,7 +523,7 @@ namespace FIM.AssignCostCenterManagerActivity
             this.UpdateUser_ResourceId1 = _target;
             this.UpdateUser_UpdateParameters1 = new UpdateRequestParameter[] {
                 new UpdateRequestParameter("Manager", UpdateMode.Modify, _manager),
-                new UpdateRequestParameter("LAB-ManagerSamAccount", UpdateMode.Modify, this.ReadManagerActivity.Resource["LAB-samAccountName"].ToString())
+                new UpdateRequestParameter("LAB-ManagerSamAccount", UpdateMode.Modify, this.ReadManagerActivity.Resource["AccountName"].ToString())
             };
         }      
     }
